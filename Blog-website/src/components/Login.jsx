@@ -18,7 +18,7 @@ function Login() {
             const session = await authService.login(data);
             if (session) {
                 const userData = await authService.getCurrentUser();
-                if (userData) useDispatch(authLogin(userData));
+                if (userData) dispatch(authLogin(userData));
                 navigate('/');
             }
         } catch (error) {
@@ -57,25 +57,30 @@ function Login() {
                             label="Email"
                             type="email"
                             placeholder="Enter your Email"
-                            {...register('email'), {
+                            {...register('email', {
                                 required: true,
-                                validate: {
+                                pattern: {
                                     matchPattern: (value) => {
-                                        return /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/.test(
-                                            value
-                                        ) || 'Invalid email address';
+                                        return (
+                                            /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/.test(
+                                                value,
+                                            ) || 'Invalid email address'
+                                        );
                                     },
-                                }
-                            }}
+                                },
+                            }
+                            )
+                        }
                         />
                         <Input
                             label="Password"
                             type="password"
                             placeholder="Enter your Password"
-                            {...register('password'), { required: true }} />
-                        <Button
-                            type="submit"
-                            className="w-full">Login</Button>
+                            {...register('password', { required: true })}
+                        />
+                        <Button type="submit" className="w-full">
+                            Login
+                        </Button>
                     </div>
                 </form>
             </div>

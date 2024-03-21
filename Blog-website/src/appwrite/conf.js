@@ -14,12 +14,12 @@ export class Service {
         this.bucket = new Storage(this.client);
     }
 
-    async createPost({ title, slug, content, featuredImage, status, userId }) {
+    async createPost({ title, content, featuredImage, status, userId }) {
         try {
             const post = await this.databases.createDocument(
                 config.appwriteDatabaseId,
                 config.appwriteCollectionId,
-                slug,
+                null, // Let Appwrite generate the document ID
                 {
                     title,
                     content,
@@ -31,6 +31,7 @@ export class Service {
             return post;
         } catch (error) {
             console.log('Appwrite service :: createPost :: error', error);
+            return false;
         }
     }
 
@@ -50,6 +51,7 @@ export class Service {
             return post;
         } catch (error) {
             console.log('Appwrite service :: updatePost :: error', error);
+            return false;
         }
     }
 
@@ -122,7 +124,7 @@ export class Service {
     }
 
     getFilePreview(fileId) {
-        return this.bucket.getFilePreview(config.appwriteBucketId, fileId);
+        return this.bucket.getFilePreview(config.appwriteBucketId, fileId).href;
     }
 }
 

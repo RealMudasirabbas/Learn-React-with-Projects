@@ -57,21 +57,19 @@ function SignUp() {
                         <Input
                             label=" Full Name"
                             placeholder="Enter your Name"
-                            {...register('name'), {
-                                required: true,
-                            }}
+                            {...register('name', { required: true })}
                         />
                         <Input 
                             label="Email"
                             placeholder="Enter your Email"
                             type="email"
-                            {...register('email'), { required: true }}
+                            {...register('email', { required: true })}
                             />
                             <Input 
                             label="Password"
                             placeholder="Enter your Password" 
                             type="password" 
-                            {...register('password'), { required: true }}/>
+                            {...register('password', { required: true })}/>
 
                         <Button
                             type="submit"
